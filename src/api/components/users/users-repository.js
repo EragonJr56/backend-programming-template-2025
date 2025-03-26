@@ -28,6 +28,10 @@ async function deleteUser(id) {
   return Users.deleteOne({ _id: id });
 }
 
+const findUserByEmail = async (email) => {
+  return await User.findOne({ email });
+};
+
 module.exports = {
   getUsers,
   getUser,
@@ -36,4 +40,5 @@ module.exports = {
   updateUser,
   changePassword,
   deleteUser,
+  findUserByEmail,
 };

@@ -25,6 +25,20 @@ async function deleteUser(id) {
   return usersRepository.deleteUser(id);
 }
 
+const authenticateUser = async (email, password) => {
+  const user = await usersRepository.findUserByEmail(email);
+  if (!user) {
+      throw new Error('INVALID_PASSWORD');
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+      throw new Error('INVALID_PASSWORD');
+  }
+
+  return { message: 'success' };
+};
+
 module.exports = {
   getUsers,
   getUser,
@@ -32,4 +46,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  authenticateUser,
 };

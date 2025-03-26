@@ -191,6 +191,16 @@ async function deleteUser(request, response, next) {
   }
 }
 
+async function login(request, response, next) {
+  try {
+      const { email, password } = req.body;
+      const result = await usersService.authenticateUser(email, password);
+      res.status(200).json(result);
+  } catch (error) {
+      res.status(403).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getUsers,
   getUser,
@@ -198,4 +208,5 @@ module.exports = {
   updateUser,
   changePassword,
   deleteUser,
+  login,
 };
